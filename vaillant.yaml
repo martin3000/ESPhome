@@ -1,0 +1,56 @@
+esphome:
+  name: vaillant
+  platform: ESP8266
+  board: d1_mini
+  includes:
+    - vaillantx6.h
+
+# web server
+web_server:
+
+# Enable Home Assistant API
+api:
+
+logger:
+
+wifi:
+  ssid: "UPX123456"
+  password: "mein vater erklaert mir jeden planeten"
+
+# over the air updates
+ota:
+
+uart:
+  id: uart_bus
+  tx_pin: D0
+  rx_pin: D1
+  baud_rate: 9600
+
+sensor:
+  - platform: template
+    id: vaill1
+    name: "vl_soll"
+    unit_of_measurement: "°C"
+    lambda: "return {};"
+  - name: vl_ist
+    id: vaill2
+    platform: template
+    unit_of_measurement: "°C"
+    lambda: "return {};"
+  - name: vl_set
+    id: vaill3
+    platform: template
+    unit_of_measurement: "°C"
+    lambda: "return {};"
+  - name: ruecklauf
+    id: vaill4
+    unit_of_measurement: "°C"
+    platform: template
+    lambda: "return {};"
+
+custom_component:
+- lambda: |-
+    auto my_x61 = new Vaillantx6(id(uart_bus),id(vaill1),id(vaill2),id(vaill3),id(vaill4));
+    App.register_component(my_x61);
+    return {my_x61};
+
