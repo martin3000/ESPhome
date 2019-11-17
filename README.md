@@ -8,7 +8,7 @@ You need ESPhome version 1.14
 Connections: 
 ```
  Heater Board from top       ESP8266
-    6P4C connector
+    6P4C RJ connector
     
        +---------+
     6  ---       |
