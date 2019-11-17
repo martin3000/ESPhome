@@ -5,9 +5,10 @@ Library for reading temperature values from the X6 interface of an vaillant gas 
 For this we use an ESP8266.
 
 Connections: 
-
+```
  Heater Board from top       ESP8266
-
+    6P4C connector
+    
        +---------+
     6  ---       |
 GND 5  ---       +--+        GND
@@ -16,3 +17,4 @@ RXD 3  ---          |        D0
     2  ---       +--+
     1  ---       |
        +---------+
+```
