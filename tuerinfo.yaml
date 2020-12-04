@@ -1,0 +1,87 @@
+#
+# https://github.com/lewisxhe/TTGO-EPaper-Series
+# http://www.lilygo.cn/prod_view.aspx?TypeId=50031&Id=1149&FId=t3:50031:3
+# https://github.com/Xinyuan-LilyGO/LilyGo-T5-ink-series
+# resolution: 250 x 122 px
+#
+esphome:
+  name: tuerinfo
+  platform: ESP32
+  board: esp32dev
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+#Homeassistant Binary Sensors
+text_sensor:
+  - platform: homeassistant
+    entity_id: sensor.tuersensor1
+    id: tuersensor1
+  - platform: homeassistant
+    entity_id: sensor.tuersensor2
+    id: tuersensor2
+  - platform: homeassistant
+    entity_id: sensor.tuersensor3
+    id: tuersensor3
+  - platform: homeassistant
+    entity_id: sensor.tuersensor4
+    id: tuersensor4
+
+# Configure SPI pins
+spi:
+  clk_pin: 18
+  mosi_pin: 23
+
+# Fonts
+font:
+  - file: "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+    id: font1
+    glyphs: "*!?%()+,-_.:°<>0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyzäöüÄÖÜ🌧ᚄ☂"
+
+# Configure e-ink display
+display:
+  - platform: waveshare_epaper
+    model: 2.13in-ttgo-b73
+    cs_pin: 5
+    dc_pin: 17
+    busy_pin: 4
+    reset_pin: 16
+#    full_update_every: 15
+    rotation: 90
+    update_interval: 1min
+    lambda: |-
+      auto time = id(homeassistant_time).now();
+
+      // Variablen für Positionierung der Texte und Kacheln
+      int text_x = 1;
+      int text_h = 20+3;
+      int offs_y = 20;
+
+      //zeile 1
+      it.print(text_x, 0*text_h+offs_y, id(font1), id(tuersensor1).state.c_str());
+
+      //zeile 2
+      if ( id(tuersensor2).state.length() >1 )
+          it.print(text_x, 1*text_h+offs_y, id(font1), id(tuersensor2).state.c_str());
+      else it.strftime(text_x, 1*text_h+offs_y, id(font1), "%d.%m.%Y %H:%M", time);
+
+      //zeile 3
+      it.print(text_x, 2*text_h+offs_y, id(font1), id(tuersensor3).state.c_str());
+
+      //zeile 4
+      it.print(text_x, 3*text_h+offs_y, id(font1), id(tuersensor4).state.c_str());
+
+      
