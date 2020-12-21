@@ -28,10 +28,6 @@ time:
   - platform: homeassistant
     id: homeassistant_time
 
-#deep_sleep:
-#  run_duration: 60s
-#  sleep_duration: 3min
-
 sensor:
   - platform: wifi_signal
     name: "wifi_signal"
@@ -59,11 +55,9 @@ spi:
 
 # Fonts
 font:
-#  - file: "/usr/share/fonts/truetype/malayalam/Uroob-Regular.ttf"
   - file: "/usr/share/fonts/truetype/msttcorefonts/Arial.ttf"
     id: font4
     glyphs: "*!?%()+,-_.:°0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyzäöüÄÖÜ🌧ᚄ"
-#    size: 20
 
   - file: "/usr/share/fonts/truetype/msttcorefonts/arial.ttf"
     id: font2
@@ -77,10 +71,6 @@ font:
     id: font1
     glyphs: "*!?%()+,-_.:°<>0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyzäöüÄÖÜ🌧ᚄ☂"
 
-#  - file: "/usr/share/fonts/truetype/noto/NotoColorEmoji.ttf"
-#    id: font3
-#    glyphs: "☔☂"
-
 # Configure e-ink display
 # custom component: https://github.com/matikij/esphome/tree/gxepd2_epaper/esphome/components/gxepd2_epaper
 display:
@@ -90,27 +80,12 @@ display:
     dc_pin: 17
     busy_pin: 4
     reset_pin: 16
-#    full_update_every: 15
     rotation: 90
-#    update_interval: 1min
     lambda: |-
       auto time = id(homeassistant_time).now();
-
-      // grosser Rahmen zeichnen
-      //it.rectangle(2, 12, it.get_width()-4, it.get_height()-14);
-
-      //Überschrift schreiben
-      //it.filled_rectangle(it.get_width()/3, 11, it.get_width()/3, 3, COLOR_OFF);
-      //it.rectangle(it.get_width()/3, 10, it.get_width()/3, 20);
-      //it.print(it.get_width()/2, 10, id(font1), TextAlign::TOP_CENTER, "Status");
-
-      // Variablen für Positionierung der Texte und Kacheln
       int text_x = 1;
       int text_h = 20+3;
       int offs_y = 15;
-      //int offs_x = 7;
-      //int rect_x = 0;
-      //int rect_h = 2;
 
       //zeile 1
       if ( id(tuersensor2).state.length() >1 )
@@ -118,7 +93,6 @@ display:
       else it.strftime(text_x, 0*text_h+offs_y, id(font1), "%d.%m.%Y %H:%M", time);
 
       //zeile 2
-      //  it.printf(text_x, 0, id(font1), "sensor value: %s", id(tuersensor1).state);
       it.print(text_x, 1*text_h+offs_y, id(font1), id(tuersensor1).state.c_str());
 
 
@@ -127,31 +101,3 @@ display:
 
       //zeile 4
       it.print(text_x, 3*text_h+offs_y, id(font1), id(tuersensor4).state.c_str());
-
-      /*
-      // Kacheln zeichnen abhängig vom Status
-      if (id(fenster_steffi).state) {
-        it.print(rect_x+offs_x, 0*text_h+rect_h+offs_y, id(font_materialdesign), "");
-      }
-      else {
-        it.print(rect_x+offs_x, 0*text_h+rect_h+offs_y, id(font_materialdesign), "");
-      }
-      if (id(fenster_thomas).state) {
-        it.print(rect_x+offs_x, 1*text_h+rect_h+offs_y, id(font_materialdesign), "");
-      }
-      else {
-        it.print(rect_x+offs_x, 1*text_h+rect_h+offs_y, id(font_materialdesign), "");
-      }
-      if (id(fenster_kueche).state) {
-        it.print(rect_x+offs_x, 2*text_h+rect_h+offs_y, id(font_materialdesign), "");
-      }
-      else {
-        it.print(rect_x+offs_x, 2*text_h+rect_h+offs_y, id(font_materialdesign), "");
-      }
-      if (id(fenster_wohnzimmer).state) {
-        it.print(rect_x+offs_x, 3*text_h+rect_h+offs_y, id(font_materialdesign), "");
-      }
-      else {
-        it.print(rect_x+offs_x, 3*text_h+rect_h+offs_y, id(font_materialdesign), "");
-      }
-      */
