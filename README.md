@@ -1,5 +1,7 @@
 # ESPhome
 
+Vaillant X6 sensor
+
 Library for reading temperature values from the X6 interface of an vaillant gas heater.
 4 Sensors are created in home assistant.
 For this we use an ESP8266.
@@ -19,3 +21,5 @@ RXD 3  ---          |        D0
     1  ---       |
        +---------+
 ```
+
+For more commands, see https://old.ethersex.de/index.php/Vaillant_X6_Schnittstelle
