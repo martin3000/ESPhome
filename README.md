@@ -22,4 +22,4 @@ RXD 3  ---          |        D0
        +---------+
 ```
 
-For more commands, see https://old.ethersex.de/index.php/Vaillant_X6_Schnittstelle
+
